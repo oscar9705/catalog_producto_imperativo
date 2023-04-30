@@ -1,5 +1,6 @@
 package co.com.freelance.products.usecase.crudproduct;
 
+import co.com.freelance.products.model.exception.NotFoundException;
 import co.com.freelance.products.model.product.Product;
 import co.com.freelance.products.model.product.gateways.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,11 @@ public class CrudProductUseCase {
     }
 
     public Product read(String id) {
+        Product product = productRepository.read(id);
+        if (product == null) {
+            throw new NotFoundException("No se encontró el producto");
+        }
+
         return productRepository.read(id);
     }
 
