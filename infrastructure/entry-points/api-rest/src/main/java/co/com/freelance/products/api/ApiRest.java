@@ -1,5 +1,4 @@
 package co.com.freelance.products.api;
-import co.com.freelance.entities.ApiResponse;
 import co.com.freelance.products.model.product.Product;
 import co.com.freelance.products.usecase.crudproduct.CrudProductUseCase;
 import lombok.AllArgsConstructor;
@@ -8,18 +7,21 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class ApiRest {
-//    private final MyUseCase useCase;
     private final CrudProductUseCase crudProductUseCase;
+    private final HttpServletRequest request;
+
 
 
     @GetMapping(path = "/product/{id}")
-    public ResponseEntity<?> read(@PathVariable String id) {
+    public ResponseEntity<?> read(@PathVariable String id, @RequestHeader(name = "Accept-Language", required = false) Locale locale) {
         return ResponseEntity.ok(crudProductUseCase.read(id));
     }
 

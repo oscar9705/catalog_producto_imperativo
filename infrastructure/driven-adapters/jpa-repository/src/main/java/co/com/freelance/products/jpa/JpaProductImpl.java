@@ -43,7 +43,7 @@ public class JpaProductImpl implements ProductRepository {
     }
 
     @Override
-    public List<Product> getAlll() {
+    public List<Product> getAll() {
         return jpaRepositoryAdapter.findAll();
     }
 }

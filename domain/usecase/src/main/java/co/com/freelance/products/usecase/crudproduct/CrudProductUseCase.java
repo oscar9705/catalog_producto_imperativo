@@ -1,15 +1,19 @@
 package co.com.freelance.products.usecase.crudproduct;
 
 import co.com.freelance.products.model.exception.NotFoundException;
+import co.com.freelance.products.model.exception.ValidationMessageEnum;
 import co.com.freelance.products.model.product.Product;
 import co.com.freelance.products.model.product.gateways.ProductRepository;
+import co.com.freelance.products.model.product.gateways.message.MessageException;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Locale;
 
 @RequiredArgsConstructor
 public class CrudProductUseCase {
     private final ProductRepository productRepository;
+    private final MessageException messageException;
 
     public void create(Product product) {
         productRepository.create(product);
@@ -18,7 +22,7 @@ public class CrudProductUseCase {
     public Product read(String id) {
         Product product = productRepository.read(id);
         if (product == null) {
-            throw new NotFoundException("No se encontró el producto");
+            throw new NotFoundException(messageException.resolveMessage(ValidationMessageEnum.NOT_FOUND_EXCEPTION));
         }
 
         return productRepository.read(id);
@@ -33,6 +37,6 @@ public class CrudProductUseCase {
     }
 
     public List<Product> getAll() {
-        return productRepository.getAlll();
+        return productRepository.getAll();
     }
 }
